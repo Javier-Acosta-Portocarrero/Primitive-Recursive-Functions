@@ -48,7 +48,7 @@ void Power::ResetCounters() {
 }
 
 /**
- * @brief 
+ * @brief Collects call statistics from Power and all its primitive recursive dependencies.
  */
 void Power::CollectCallStatistics(std::map<std::string, unsigned long long>& statistics) const {
   RegisterStatistics(statistics, "Power");

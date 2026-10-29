@@ -18,7 +18,7 @@
 
 // Limit equation: M(x, 0) = g(x) = Z(x).
 // Recursion equation: M(x, S(y)) = h(x, y, M(x, y))
-//                    = (A o (P_3^3 x P_1^3))(x, y, M(x, y)).
+//                  = (A o (P_1^3 x P_3^3))(x, y, M(x, y)).
 class Multiplication : public FPR {
  public:
   unsigned Evaluate(const std::vector<unsigned>& arguments) override;
