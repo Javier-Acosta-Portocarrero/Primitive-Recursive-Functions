@@ -21,7 +21,7 @@ The source code is organized into the following classes:
 - **Power**: obtains exponentiation from primitive recursion, using private objects of `Zero`, `Successor`, `Projection` and `Multiplication`.
 - **InputException** and **FPRException**: custom exceptions derived from `std::runtime_error` for invalid arguments and invalid FPR evaluations.
 
-Each higher-level function owns the same lower-level function objects for its entire lifetime. Their counters are not static and are not shared between independent `Power` instances. When querying a `Power` object, the counters of all its contained objects are combined, including different instances of the same function (for example, the `Successor` in `Power` and in its nested `Addition`).
+Each higher-level function owns the same lower-level function objects. Their counters are not static and are not shared between independent `Power` instances. When querying a `Power` object, the counters of all its contained objects are combined, including different instances of the same function (for example, the `Successor` in `Power` and in its nested `Addition`).
 
 Composition is implemented through explicit calls to projections and lower-level primitive recursive functions. Unlike implementations using a separate Composition class, composition operations themselves are not counted as function calls.
 
@@ -115,8 +115,6 @@ Calls by function:
   Successor: 15
   Zero: 4
 ```
-
-The reported number includes each invocation to `Evaluate` of each FPR object, including recursive invocations and calls to basic functions. For a given `Power` instance, the counts accumulate if `Evaluate` is called again, `ResetCounters()` resets the counters of the entire owned object tree, allowing independent per-input measurements without creating new objects.
 
 Non-natural numbers, arguments outside the range of `unsigned`, unknown flags, repeated flags and missing options are rejected with an error message and usage information. A mathematical result exceeding the range of `unsigned` throws `FPRException` as soon as the overflow is reached by `Successor`.
 
