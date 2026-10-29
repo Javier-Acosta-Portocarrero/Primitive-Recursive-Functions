@@ -17,11 +17,13 @@ The source code is organized into the following classes:
 - **Successor**: initial function $S(x) = x + 1$.
 - **Projection**: initial function $P_i^n(x_1, \ldots, x_n) = x_i$, with a one-based index `i` specified at construction.
 - **Addition**: obtains addition from primitive recursion, using private objects of `Projection` and `Successor`.
-- **Multiplication**: obtains multiplication from primitive recursion, using private objects of `Zero` and `Addition`.
-- **Power**: obtains exponentiation from primitive recursion, using private objects of `Zero`, `Successor` and `Multiplication`.
+- **Multiplication**: obtains multiplication from primitive recursion, using private objects of `Zero`, `Projection` and `Addition`.
+- **Power**: obtains exponentiation from primitive recursion, using private objects of `Zero`, `Successor`, `Projection` and `Multiplication`.
 - **InputException** and **FPRException**: custom exceptions derived from `std::runtime_error` for invalid arguments and invalid FPR evaluations.
 
 Each higher-level function owns the same lower-level function objects for its entire lifetime. Their counters are not static and are not shared between independent `Power` instances. When querying a `Power` object, the counters of all its contained objects are combined, including different instances of the same function (for example, the `Successor` in `Power` and in its nested `Addition`).
+
+Composition is implemented through explicit calls to projections and lower-level primitive recursive functions. Unlike implementations using a separate Composition class, composition operations themselves are not counted as function calls.
 
 ## Definition as primitive recursive functions
 
@@ -63,7 +65,7 @@ Recursion equation:
 $$
 \begin{aligned}
 M(x,S(y)) &= h(x,y,M(x,y))\\
-&= (A \circ (P_3^3 \times P_1^3))(x,y,M(x,y))
+&= (A \circ (P_3^1 \times P_3^3))(x,y,M(x,y))
 \end{aligned}
 $$
 
@@ -104,12 +106,12 @@ Output example:
 
 ```text
 Result: 8
-Function calls: 61
+Function calls: 95
 Calls by function:
   Addition: 21
   Multiplication: 10
   Power: 4
-  Projection: 7
+  Projection: 41
   Successor: 15
   Zero: 4
 ```
