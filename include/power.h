@@ -15,6 +15,7 @@
 #include "multiplication.h"
 #include "successor.h"
 #include "zero.h"
+#include "projection.h"
 
 // Limit equation: P(x, 0) = g(x) = (S o Z)(x).
 // Recursion equation: P(x, S(y)) = h(x, y, P(x, y))
@@ -30,6 +31,8 @@ class Power : public FPR {
  private:
   Zero zero_;
   Successor successor_;
+  Projection base_projection_{3, 1};
+  Projection result_projection_{3, 3};
   Multiplication multiplication_;
 };
 

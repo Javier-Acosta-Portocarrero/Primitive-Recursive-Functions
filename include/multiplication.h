@@ -12,6 +12,7 @@
 #define MULTIPLICATION_H
 
 #include "addition.h"
+#include "projection.h"
 #include "fpr.h"
 #include "zero.h"
 
@@ -28,6 +29,8 @@ class Multiplication : public FPR {
 
  private:
   Zero zero_;
+  Projection base_projection_{3, 1};
+  Projection result_projection_{3, 3};
   Addition addition_;
 };
 

@@ -25,9 +25,12 @@ unsigned Addition::Evaluate(const std::vector<unsigned>& arguments) {
   const unsigned x = arguments[0];
   const unsigned y = arguments[1];
   if (y == 0) {
-    return first_projection_.Evaluate({x, y});
+    return first_projection_.Evaluate({x});
   }
-  return successor_.Evaluate({Evaluate({x, y - 1})});
+  const unsigned previous_result = Evaluate({x, y - 1});
+  const unsigned projected_result = result_projection_.Evaluate({x, y - 1, previous_result});
+
+  return successor_.Evaluate({projected_result});
 }
 
 /**
@@ -36,11 +39,13 @@ unsigned Addition::Evaluate(const std::vector<unsigned>& arguments) {
 void Addition::ResetCounters() {
   FPR::ResetCounters();
   first_projection_.ResetCounters();
+  result_projection_.ResetCounters();
   successor_.ResetCounters();
 }
 
 void Addition::CollectCallStatistics(std::map<std::string, unsigned long long>& statistics) const {
   RegisterStatistics(statistics, "Addition");
   RegisterDependencyStatistics(statistics, first_projection_);
+  RegisterDependencyStatistics(statistics, result_projection_);
   RegisterDependencyStatistics(statistics, successor_);
 }

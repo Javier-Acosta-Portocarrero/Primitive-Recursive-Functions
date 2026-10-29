@@ -27,7 +27,8 @@ class Addition : public FPR {
   void CollectCallStatistics(std::map<std::string, unsigned long long>& statistics) const override;
 
  private:
-  Projection first_projection_{2, 1};
+  Projection first_projection_{1, 1};
+  Projection result_projection_{3, 3};
   Successor successor_;
 };
 
