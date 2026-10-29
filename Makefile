@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++23 -Wall -Wextra -pedantic
+CXXFLAGS = -std=c++23 -Wall -Wextra -pedantic -O3 -march=native -flto
 TARGET = build/primitive_recursive_functions
 
 SOURCES = src/fpr.cc \
